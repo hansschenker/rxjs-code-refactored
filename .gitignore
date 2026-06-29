@@ -1,0 +1,33 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+docs/.vitepress/dist
+docs/.vitepress/cache
+upstream-rxjs
+*.local
+
+# Root Vite starter files are not part of the Readable RxJS docs repo.
+/index.html
+/src
+/public
+/tsconfig.json
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?

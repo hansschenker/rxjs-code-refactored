@@ -1,0 +1,14 @@
+{
+  "name": "readable-rxjs",
+  "version": "0.0.0-study",
+  "private": true,
+  "description": "Readable, behavior-compatible study edition of selected RxJS 7.x source files.",
+  "license": "Apache-2.0",
+  "scripts": {
+    "check:types": "cd ../upstream-rxjs && ./node_modules/.bin/tsc -p ../readable-rxjs/tsconfig.json",
+    "test:operators": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config spec/support/.mocharc.js --require ../readable-rxjs/spec/support/mocha-readable-path-mappings.js \"spec/operators/*-spec.ts\"",
+    "test:operator": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config spec/support/.mocharc.js --require ../readable-rxjs/spec/support/mocha-readable-path-mappings.js",
+    "test:readable": "cd ../upstream-rxjs && env NODE_PATH=./node_modules ./node_modules/.bin/mocha --config spec/support/.mocharc.js \"../readable-rxjs/spec/**/*.ts\"",
+    "test:map": "cd ../upstream-rxjs && env NODE_PATH=./node_modules ./node_modules/.bin/mocha --config spec/support/.mocharc.js ../readable-rxjs/spec/operators/map-spec.ts"
+  }
+}

@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="https://cdn.simpleicons.org/openai/111111" alt="OpenAI logo" width="72" height="72">
+  <img src="./docs/openai-logo.svg" alt="OpenAI logo" width="180">
 </p>
 
 # Readable RxJS Operators

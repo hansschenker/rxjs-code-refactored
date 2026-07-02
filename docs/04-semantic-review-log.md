@@ -741,3 +741,123 @@ The two `test:observables` failures are pre-existing environment failures unrela
 
 1. ajax "should fail if fails to parse response in older IE" asserts a pre-Node-20 V8 JSON error message string (`rxjs/ajax` is upstream code, out of rewrite scope).
 2. webSocket "should handle constructor errors if no WebSocketCtor" — Node ≥ 22 ships a global `WebSocket`, so the `ReferenceError` path cannot fire.
+
+## Scheduler Rewrite: Provider Identity Constraint
+
+Date: 2026-07-02
+
+The scheduler directory rewrite covers 14 of the 21 upstream files in `src/internal/scheduler/` as genuine readable rewrites. The other 7 — the six timing providers (`animationFrameProvider`, `dateTimestampProvider`, `immediateProvider`, `intervalProvider`, `performanceTimestampProvider`, `timeoutProvider`) and the `timerHandle` type module — are **permanent identity-preserving re-exports** of the upstream modules:
+
+- The upstream TestScheduler's `run()` assigns `animationFrameProvider.delegate`, `dateTimestampProvider.delegate`, `immediateProvider.delegate`, `intervalProvider.delegate`, `timeoutProvider.delegate`, and `performanceTimestampProvider.delegate` at the start of every marble test and clears them after.
+- Delegation only works on the singleton objects the running code actually imports. A readable copy of a provider would be a different object; the delegates would never reach it, and the readable scheduler actions would fire real timers inside virtual-time tests.
+- The readable scheduler actions therefore import the providers through re-export modules that preserve upstream object identity. Each re-export file carries an explanatory header comment.
+
+Wiring changes made alongside the rewrite:
+
+- The readable root index now exports `asap`/`asapScheduler`, `async`/`asyncScheduler`, `queue`/`queueScheduler`, `animationFrame`/`animationFrameScheduler`, and `VirtualTimeScheduler`/`VirtualAction` from `./scheduler/`.
+- 14 readable operator/observable files that imported upstream scheduler modules now import readable siblings: the `asyncScheduler` defaults in the `*Time` operators and `timer`/`interval`, `dateTimestampProvider` in `timestamp`/`timeInterval`, and the animation/performance providers in `animationFrames`.
+- The runtime path mapping and tsconfig remap `rxjs/internal/scheduler/*` to `readable-rxjs/src/scheduler/`.
+- The `Scheduler` base class (`src/internal/Scheduler.ts`, outside the scheduler directory) remains upstream.
+
+Typing directive applied throughout the scheduler rewrite: internal-only tightening (e.g. `flushId: TimerHandle | undefined` replacing an implicit-any local); public members accessed across scheduler subclasses kept their exact declared types; no `override` keyword (upstream pins TypeScript 4.2.4).
+
+## Scheduler Group 1: Async Core
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/scheduler/Action.ts`
+- `readable-rxjs/src/scheduler/AsyncAction.ts`
+- `readable-rxjs/src/scheduler/AsyncScheduler.ts`
+- `readable-rxjs/src/scheduler/async.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `AsyncAction` preserves the id/delay/state recycling logic: `recycleAsyncId` KEEPS the running interval when the action is rescheduled from inside its own `work` with the same delay (`pending === false` at that point), and clears it otherwise — upstream deliberately uses `setInterval` so repeat actions tick at the interval period.
+- `execute` returns errors instead of throwing, unsubscribing first on error; the falsy-error HACK (`new Error('Scheduled action threw falsy error')`) is preserved because callers rely on the truthiness of the return value.
+- `unsubscribe` order preserved: null `work`/`state`/`scheduler` → `arrRemove` → recycle id with delay `null` (always clears the interval) → `super.unsubscribe()`.
+- `AsyncScheduler.flush` preserves the `_active` reentrancy guard (reentrant flushes queue the action instead of nesting), the do/while `actions.shift()` drain, and the error path that unsubscribes all remaining actions before rethrowing.
+- No dedicated spec exists for this group; it is exercised by every scheduler spec, all timing operator specs, and the `timer`/`interval` observable specs.
+
+## Scheduler Group 2: Macro, Micro, And Frame Batching
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/scheduler/AsapAction.ts`
+- `readable-rxjs/src/scheduler/AsapScheduler.ts`
+- `readable-rxjs/src/scheduler/asap.ts`
+- `readable-rxjs/src/scheduler/QueueAction.ts`
+- `readable-rxjs/src/scheduler/QueueScheduler.ts`
+- `readable-rxjs/src/scheduler/queue.ts`
+- `readable-rxjs/src/scheduler/AnimationFrameAction.ts`
+- `readable-rxjs/src/scheduler/AnimationFrameScheduler.ts`
+- `readable-rxjs/src/scheduler/animationFrame.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- Same-tick batching preserved via the shared `scheduler._scheduled` handle: the `||`-assignment in `requestAsyncId` gives every zero-delay action scheduled in the same pass one shared immediate (Asap) or one shared animation frame request.
+- `recycleAsyncId` asymmetry preserved: `AnimationFrameAction` (7.8.2) additionally requires `id === scheduler._scheduled` before cancelling the frame — during a flush `_scheduled` has already moved on, and cancelling then could kill a newly requested frame.
+- Flush `flushId` capture differs between the two schedulers and is preserved: `AsapScheduler.flush` reads `_scheduled` and clears it up front; `AnimationFrameScheduler.flush` uses `action.id` when an initial action is passed and leaves `_scheduled` alone in that case.
+- `QueueAction` preserves synchronous execution for `delay <= 0`: `schedule` delegates to `scheduler.flush(this)` and `execute` runs the work directly; positive delays fall back to `AsyncAction` behavior; the documented `0`-return HACK (including upstream's "instanceo" typo) is retained verbatim.
+- `QueueScheduler` remains an empty subclass — the queue semantics live entirely in `QueueAction`.
+
+## Scheduler Group 3: Virtual Time And Providers
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/scheduler/VirtualTimeScheduler.ts` (includes `VirtualAction`)
+- `readable-rxjs/src/scheduler/animationFrameProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/dateTimestampProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/immediateProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/intervalProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/performanceTimestampProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/timeoutProvider.ts` (re-export)
+- `readable-rxjs/src/scheduler/timerHandle.ts` (re-export, type-only)
+
+Review result:
+
+- `VirtualTimeScheduler` rewrite complete; behavior verified against upstream specs. The 7 re-exports are permanent by design (see the provider identity constraint above).
+
+Behavior notes:
+
+- `VirtualTimeScheduler.flush` drains the sorted queue while `delay <= maxFrames`; a queued `VirtualAction`'s `delay` holds its ABSOLUTE due frame (assigned in `requestAsyncId` as `scheduler.frame + delay`), and one failed action unsubscribes everything still queued before the error is thrown.
+- Rescheduled `VirtualAction`s clone a new action and deactivate the old one (`active` flag plus the `_execute` gate); the monotonic `index` counter keeps `sortActions` a stable sort so same-frame actions run in scheduling order.
+- `VirtualAction.recycleAsyncId` is a no-op — virtual actions never arm a real timer.
+- Upstream's `TestScheduler` still extends the **upstream** `VirtualTimeScheduler`; the readable class is exercised by `VirtualTimeScheduler-spec.ts`, while `TestScheduler-spec.ts` exercises the provider delegation through the readable re-export modules.
+
+## Scheduler Rewrite Broad Verification
+
+Date: 2026-07-02 (Node 24.16.0, Windows)
+
+Commands:
+
+```sh
+npm run check:types
+npm run test:schedulers
+npm run test:operators
+npm run test:observables
+npm run test:readable
+```
+
+Results:
+
+```text
+npm run check:types: passed
+npm run test:schedulers: 120 passing, 0 failing (identical to the upstream-config baseline)
+npm run test:operators: 2264 passing, 3 pending
+npm run test:observables: 522 passing, 2 failing (the two known pre-existing environment failures)
+npm run test:readable: 4 passing
+```

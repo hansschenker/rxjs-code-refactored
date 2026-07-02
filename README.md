@@ -18,10 +18,11 @@ The OpenAI logo above is used as attribution to the AI assistance used to create
 
 - `readable-rxjs/src/operators`: readable TypeScript versions of the RxJS operator files.
 - `readable-rxjs/src/observable` (including `dom/`): readable TypeScript versions of all 34 RxJS observable creation files.
+- `readable-rxjs/src/scheduler`: readable TypeScript versions of the RxJS scheduler files — 14 genuine rewrites plus 7 permanent identity-preserving re-exports (the six timing providers and the `timerHandle` type module). The providers are re-exported rather than rewritten because the upstream TestScheduler installs virtual-time delegates onto the provider singletons during every marble test; a readable copy would never receive the delegates.
 - `readable-rxjs/src/index.ts`, `src/fetch/index.ts`, `src/webSocket/index.ts`: readable entry indexes mirroring the `rxjs`, `rxjs/fetch`, and `rxjs/webSocket` export surfaces.
 - `readable-rxjs/spec`: focused study-edition tests and test support, including the readable mocha config (`spec/support/.mocharc.readable.js`).
 - `docs`: VitePress documentation, review notes, semantic review log, and live source pages.
-- `docs/operators/catalog.md` and `docs/observables/catalog.md`: generated-style catalogs with tags and spec coverage.
+- `docs/operators/catalog.md`, `docs/observables/catalog.md`, and `docs/schedulers/catalog.md`: generated-style catalogs with tags and spec coverage.
 
 ## What Is Not Included
 
@@ -65,6 +66,7 @@ npm run check:types
 npm run test:readable
 npm run test:operators
 npm run test:observables
+npm run test:schedulers
 ```
 
 Latest project verification (2026-07-02, Node 24.16.0, Windows):
@@ -74,6 +76,7 @@ npm run check:types: passed (exit 0)
 npm run test:readable: 4 passing
 npm run test:operators: 2264 passing, 3 pending
 npm run test:observables: 522 passing, 2 failing
+npm run test:schedulers: 120 passing, 0 failing (identical to the upstream-config baseline)
 ```
 
 The two `test:observables` failures are pre-existing environment failures unrelated to the rewrite; both are identical against unmodified upstream:
@@ -97,5 +100,7 @@ RxJS is copyright the RxJS contributors and licensed under Apache License 2.0.
 - Semantic review groups: complete, groups `1-13`.
 - Observable implementation rewrite: complete, `34 / 34` (including `dom/`).
 - Observable review groups: complete, groups `1-6`.
+- Scheduler implementation rewrite: complete — `14` readable rewrites plus `7` permanent identity-preserving provider re-exports (all 21 upstream scheduler files accounted for).
+- Scheduler review groups: complete, groups `1-3`.
 - VitePress documentation: complete enough for browsing and review.
 - Intended use: study, documentation, and refactoring practice.

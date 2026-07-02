@@ -16,6 +16,7 @@ export default defineConfig({
       { text: 'Home', link: '/' },
       { text: 'Operators', link: '/operators/' },
       { text: 'Observables', link: '/observables/' },
+      { text: 'Schedulers', link: '/schedulers/' },
       { text: 'Catalog', link: '/operators/catalog' },
       { text: 'Study Notes', link: '/03-operator-study-notes' },
       { text: 'Review Log', link: '/04-semantic-review-log' },
@@ -30,6 +31,7 @@ export default defineConfig({
           { text: 'Operator Study Notes', link: '/03-operator-study-notes' },
           { text: 'Semantic Review Log', link: '/04-semantic-review-log' },
           { text: 'Observable Review Groups', link: '/05-observable-review-groups' },
+          { text: 'Scheduler Review Groups', link: '/06-scheduler-review-groups' },
         ],
       },
       {
@@ -63,6 +65,16 @@ export default defineConfig({
           { text: '4. Combination And Join', link: '/observables/04-combination-join' },
           { text: '5. Multicasting', link: '/observables/05-multicasting' },
           { text: '6. DOM Integration', link: '/observables/06-dom-integration' },
+        ],
+      },
+      {
+        text: 'Schedulers',
+        items: [
+          { text: 'Scheduler Index', link: '/schedulers/' },
+          { text: 'Generated Catalog', link: '/schedulers/catalog' },
+          { text: '1. Async Core', link: '/schedulers/01-async-core' },
+          { text: '2. Macro, Micro, And Frame Batching', link: '/schedulers/02-macro-micro-frame' },
+          { text: '3. Virtual Time And Providers', link: '/schedulers/03-virtual-time-and-providers' },
         ],
       },
     ],

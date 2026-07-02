@@ -5,13 +5,14 @@
     "incremental": false,
     "paths": {
       "chai": ["./upstream-rxjs/node_modules/@types/chai"],
-      "rxjs": ["./upstream-rxjs/src/index"],
+      "rxjs": ["./readable-rxjs/src/index"],
       "rxjs/operators": ["./readable-rxjs/src/operators/index"],
       "rxjs/testing": ["./upstream-rxjs/src/testing/index"],
       "rxjs/ajax": ["./upstream-rxjs/src/ajax/index"],
-      "rxjs/webSocket": ["./upstream-rxjs/src/webSocket/index"],
-      "rxjs/fetch": ["./upstream-rxjs/src/fetch/index"],
+      "rxjs/webSocket": ["./readable-rxjs/src/webSocket/index"],
+      "rxjs/fetch": ["./readable-rxjs/src/fetch/index"],
       "rxjs/internal/operators/*": ["./readable-rxjs/src/operators/*"],
+      "rxjs/internal/observable/*": ["./readable-rxjs/src/observable/*"],
       "rxjs/internal/*": ["./upstream-rxjs/src/internal/*"]
     },
     "typeRoots": ["../upstream-rxjs/node_modules/@types"],

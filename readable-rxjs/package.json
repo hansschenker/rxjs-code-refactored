@@ -8,6 +8,7 @@
     "check:types": "cd ../upstream-rxjs && ./node_modules/.bin/tsc -p ../readable-rxjs/tsconfig.json",
     "test:operators": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js \"spec/operators/*-spec.ts\"",
     "test:observables": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js \"spec/observables/**/*-spec.ts\"",
+    "test:schedulers": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js \"spec/schedulers/*-spec.ts\"",
     "test:operator": "cd ../upstream-rxjs && ./node_modules/.bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js",
     "test:readable": "cd ../upstream-rxjs && env NODE_PATH=./node_modules ./node_modules/.bin/mocha --config spec/support/.mocharc.js \"../readable-rxjs/spec/**/*.ts\"",
     "test:map": "cd ../upstream-rxjs && env NODE_PATH=./node_modules ./node_modules/.bin/mocha --config spec/support/.mocharc.js ../readable-rxjs/spec/operators/map-spec.ts"

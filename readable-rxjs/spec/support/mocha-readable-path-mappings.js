@@ -15,6 +15,7 @@ const entryPoints = {
 const internalDirs = [
   { pattern: /^rxjs\/internal\/operators\/(.+)$/, dir: join(readableSrc, 'operators') },
   { pattern: /^rxjs\/internal\/observable\/(.+)$/, dir: join(readableSrc, 'observable') },
+  { pattern: /^rxjs\/internal\/scheduler\/(.+)$/, dir: join(readableSrc, 'scheduler') },
 ];
 
 const mod = require('module');

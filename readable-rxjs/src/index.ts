@@ -19,11 +19,11 @@ export { ReplaySubject } from '../../upstream-rxjs/src/internal/ReplaySubject';
 export { AsyncSubject } from '../../upstream-rxjs/src/internal/AsyncSubject';
 
 /* Schedulers */
-export { asap, asapScheduler } from '../../upstream-rxjs/src/internal/scheduler/asap';
-export { async, asyncScheduler } from '../../upstream-rxjs/src/internal/scheduler/async';
-export { queue, queueScheduler } from '../../upstream-rxjs/src/internal/scheduler/queue';
-export { animationFrame, animationFrameScheduler } from '../../upstream-rxjs/src/internal/scheduler/animationFrame';
-export { VirtualTimeScheduler, VirtualAction } from '../../upstream-rxjs/src/internal/scheduler/VirtualTimeScheduler';
+export { asap, asapScheduler } from './scheduler/asap';
+export { async, asyncScheduler } from './scheduler/async';
+export { queue, queueScheduler } from './scheduler/queue';
+export { animationFrame, animationFrameScheduler } from './scheduler/animationFrame';
+export { VirtualTimeScheduler, VirtualAction } from './scheduler/VirtualTimeScheduler';
 export { Scheduler } from '../../upstream-rxjs/src/internal/Scheduler';
 
 /* Subscription */

@@ -13,6 +13,7 @@
       "rxjs/fetch": ["./readable-rxjs/src/fetch/index"],
       "rxjs/internal/operators/*": ["./readable-rxjs/src/operators/*"],
       "rxjs/internal/observable/*": ["./readable-rxjs/src/observable/*"],
+      "rxjs/internal/scheduler/*": ["./readable-rxjs/src/scheduler/*"],
       "rxjs/internal/*": ["./upstream-rxjs/src/internal/*"]
     },
     "typeRoots": ["../upstream-rxjs/node_modules/@types"],

@@ -14,6 +14,16 @@ The readable operator rewrite, semantic review notes, and VitePress documentatio
 
 The OpenAI logo above is used as attribution to the AI assistance used to create the documentation. OpenAI and the OpenAI logo are trademarks of OpenAI.
 
+<p align="center">
+  <img src="./docs/claude-logo.svg" alt="Claude sun rays logo" width="140">
+</p>
+
+## Observable, Scheduler, And Test Harness Rewrite With Claude Fable 5
+
+The readable observable creation rewrite (all 34 files of `internal/observable`, including `dom/`), the scheduler rewrite (14 readable rewrites plus 7 identity-preserving provider re-exports), the readable root index and entry-point remapping, the test harness ordering fix that made the upstream suites genuinely exercise the readable code for the first time, and the accompanying VitePress documentation were created with the Claude Fable 5 model by Anthropic.
+
+The Claude sun-ray mark above is used as attribution to the AI assistance used for this part of the project. Claude and Anthropic are trademarks of Anthropic, PBC.
+
 ## What Is Included
 
 - `readable-rxjs/src/operators`: readable TypeScript versions of the RxJS operator files.

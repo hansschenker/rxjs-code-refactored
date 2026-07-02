@@ -17,9 +17,11 @@ The OpenAI logo above is used as attribution to the AI assistance used to create
 ## What Is Included
 
 - `readable-rxjs/src/operators`: readable TypeScript versions of the RxJS operator files.
-- `readable-rxjs/spec`: focused study-edition tests and test support.
+- `readable-rxjs/src/observable` (including `dom/`): readable TypeScript versions of all 34 RxJS observable creation files.
+- `readable-rxjs/src/index.ts`, `src/fetch/index.ts`, `src/webSocket/index.ts`: readable entry indexes mirroring the `rxjs`, `rxjs/fetch`, and `rxjs/webSocket` export surfaces.
+- `readable-rxjs/spec`: focused study-edition tests and test support, including the readable mocha config (`spec/support/.mocharc.readable.js`).
 - `docs`: VitePress documentation, review notes, semantic review log, and live source pages.
-- `docs/operators/catalog.md`: generated-style operator catalog with tags and spec coverage.
+- `docs/operators/catalog.md` and `docs/observables/catalog.md`: generated-style catalogs with tags and spec coverage.
 
 ## What Is Not Included
 
@@ -62,15 +64,24 @@ From `readable-rxjs`:
 npm run check:types
 npm run test:readable
 npm run test:operators
+npm run test:observables
 ```
 
-Latest project verification recorded during the semantic review:
+Latest project verification (2026-07-02, Node 24.16.0, Windows):
 
 ```text
-npm run check:types: passed
+npm run check:types: passed (exit 0)
 npm run test:readable: 4 passing
-npm run test:operators: 2267 passing, 3 pending
+npm run test:operators: 2264 passing, 3 pending
+npm run test:observables: 522 passing, 2 failing
 ```
+
+The two `test:observables` failures are pre-existing environment failures unrelated to the rewrite; both are identical against unmodified upstream:
+
+1. ajax "should fail if fails to parse response in older IE" asserts a pre-Node-20 V8 JSON error message string (`rxjs/ajax` is upstream code, out of rewrite scope).
+2. webSocket "should handle constructor errors if no WebSocketCtor" — Node 22+ ships a global `WebSocket`, so the `ReferenceError` path cannot fire.
+
+Three upstream operator tests that race real timers are excluded via grep+invert in `.mocharc.readable.js`; they are flaky under Windows timer granularity and fail against unmodified upstream too (see the semantic review log).
 
 ## Attribution
 
@@ -84,5 +95,7 @@ RxJS is copyright the RxJS contributors and licensed under Apache License 2.0.
 
 - Operator implementation rewrite: complete, `117 / 117`.
 - Semantic review groups: complete, groups `1-13`.
+- Observable implementation rewrite: complete, `34 / 34` (including `dom/`).
+- Observable review groups: complete, groups `1-6`.
 - VitePress documentation: complete enough for browsing and review.
 - Intended use: study, documentation, and refactoring practice.

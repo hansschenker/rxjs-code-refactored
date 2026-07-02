@@ -1,6 +1,6 @@
-# Semantic Operator Review Log
+# Semantic Review Log
 
-This log records completed semantic review passes over the readable operator tree. It is a study-edition review aid, not upstream RxJS documentation.
+This log records completed semantic review passes over the readable operator and observable trees. It is a study-edition review aid, not upstream RxJS documentation.
 
 ## Group 1: Projection And Simple Selection
 
@@ -553,3 +553,191 @@ npm run check:types: passed
 npm run test:readable: 4 passing
 npm run test:operators: 2267 passing, 3 pending
 ```
+
+## Observable Rewrite: Test Harness Correction
+
+Date: 2026-07-02
+
+While wiring the observable rewrite into the test harness, a defect in the previous setup was found and fixed:
+
+- The previous setup passed the readable path-mapping hook via a CLI `--require` flag. Mocha loads CLI requires **before** config-file requires, so upstream's `spec/support/mocha-path-mappings.js` always installed last. Each mapper wraps the previously installed `Module._resolveFilename`, so the last-installed mapper runs first — upstream's mapper won and routed every `rxjs` import back to the upstream tree.
+- Consequence: the earlier recorded operator runs (the "2267 passing" results above) exercised **upstream** code, not the readable operators. They validated the harness and the specs, not the rewrite.
+- Fix: `readable-rxjs/spec/support/.mocharc.readable.js` fixes the require order in a config file — upstream's mapper first, the readable mapper (`mocha-readable-path-mappings.js`) last, so the readable hook runs first and delegates non-readable paths to upstream's mapper. The runtime remap now covers `rxjs`, `rxjs/operators`, `rxjs/fetch`, `rxjs/webSocket`, and `rxjs/internal/{operators,observable}/*`.
+- Three upstream operator tests are excluded via grep+invert in `.mocharc.readable.js` ("should buffer when Promise resolves", "should skip until Promise resolves", "should window when Promise resolves"). They race `interval(3)` against an 8ms real-timer Promise and are flaky under Windows timer granularity; they fail against unmodified upstream too, and their late uncaught assertions abort the whole mocha run. This accounts for the operator count moving from 2267 to 2264.
+- The 2026-07-02 numbers below are therefore the first genuine verification of the readable tree — and it passes.
+
+## Observable Group 1: Creation Basics
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/innerFrom.ts`
+- `readable-rxjs/src/observable/from.ts`
+- `readable-rxjs/src/observable/of.ts`
+- `readable-rxjs/src/observable/empty.ts`
+- `readable-rxjs/src/observable/never.ts`
+- `readable-rxjs/src/observable/throwError.ts`
+- `readable-rxjs/src/observable/range.ts`
+- `readable-rxjs/src/observable/defer.ts`
+- `readable-rxjs/src/observable/iif.ts`
+- `readable-rxjs/src/observable/using.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `innerFrom` preserves the type-check priority order (interop observable → array-like → promise → async-iterable → iterable → readable-stream); the order is semantic, not stylistic.
+- `fromPromise` keeps the trailing `.then(null, reportUnhandledError)` so post-teardown rejections are reported.
+- `fromIterable` early-returns on a closed subscriber so the iterator's `return` cleanup runs without emitting `complete`.
+- `empty()` and `never()` return the module-level `EMPTY`/`NEVER` singletons; identity is guaranteed (`empty-spec` asserts `empty() === EMPTY`).
+- `throwError` preserves raw-value vs factory error identity; the scheduled path passes the subscriber as the scheduler action state (`emitError as any`), matching upstream exactly.
+- `range` preserves the `count == null` single-argument swap, the `count <= 0` → `EMPTY` short-circuit, and the exclusive end bound.
+- `using` creates the resource before `observableFactory` runs, maps a falsy result to `EMPTY`, and keeps the teardown null-guard (upstream notes optional chaining broke declaration output).
+
+## Observable Group 2: Timing And Generation
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/interval.ts`
+- `readable-rxjs/src/observable/timer.ts`
+- `readable-rxjs/src/observable/generate.ts`
+- `readable-rxjs/src/observable/pairs.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `timer` preserves the due-time arithmetic `isValidDate(dueTime) ? +dueTime - scheduler.now() : dueTime` with negative clamping, the `intervalDuration = -1` emit-once sentinel, and the self-rescheduling `function` callback (not an arrow) so `this.schedule` targets the action.
+- `generate` preserves the `arguments.length === 1` arity check for the config-object form (the entry point cannot be an arrow function), the falsy fourth-argument identity `resultSelector`, and the scheduler vs no-scheduler split via `defer` plus `scheduleIterable`.
+- `pairs` remains a deprecated delegate to `from(Object.entries(obj), scheduler)` with all four deprecated overloads.
+
+## Observable Group 3: Events And Callbacks
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/fromEvent.ts`
+- `readable-rxjs/src/observable/fromEventPattern.ts`
+- `readable-rxjs/src/observable/bindCallback.ts`
+- `readable-rxjs/src/observable/bindNodeCallback.ts`
+- `readable-rxjs/src/observable/bindCallbackInternals.ts`
+- `readable-rxjs/src/observable/fromSubscribable.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `fromEvent` preserves duck-typing priority EventTarget → Node-style emitter → jQuery-style, with both methods required per shape; options are forwarded to BOTH add and remove; the ArrayLike fan-out is checked last; multi-argument events emit the raw arguments array.
+- `bindCallbackInternals` adds the subscriber to the AsyncSubject BEFORE the one-time `callbackFunc.apply`; the `isAsync`/`isComplete` two-flag dance defers `complete` past synchronous calls; the scheduler path composes `subscribeOn` then `observeOn`; results replay to late subscribers via the AsyncSubject.
+- `fromSubscribable` has no dedicated spec; it is covered through the operator `connect-spec.ts`.
+- `bindCallbackInternals` is covered through the `bindCallback`/`bindNodeCallback` specs (32 tests).
+
+## Observable Group 4: Combination And Join
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/combineLatest.ts`
+- `readable-rxjs/src/observable/concat.ts`
+- `readable-rxjs/src/observable/merge.ts`
+- `readable-rxjs/src/observable/race.ts`
+- `readable-rxjs/src/observable/zip.ts`
+- `readable-rxjs/src/observable/forkJoin.ts`
+- `readable-rxjs/src/observable/onErrorResumeNext.ts`
+- `readable-rxjs/src/observable/partition.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `combineLatest` records values before first-value bookkeeping, gates emission on all-sources-emitted, emits a `values.slice()` copy per emission, honors the scheduler for empty input via `from([], scheduler)`, and keeps `combineLatestInit` exported for the operator form.
+- `race` nulls the subscription array BEFORE emitting the winning value, aborts remaining subscriptions on a synchronous winner, and keeps `raceInit` exported for `raceWith`.
+- `zip` preserves the push → every-check → shift+emit → empty-buffer completion check order and the double teardown registration.
+- `forkJoin` keeps the completion-before-value logic in the subscriber finalizer, not the complete handler.
+- `onErrorResumeNext` registers the next-source subscription as teardown AFTER subscribe — that ordering is the sequencing mechanism for synchronous completion.
+- `merge` and `concat` preserve the argument-mutating `popScheduler`/`popNumber` order; `merge` keeps the 0 → `EMPTY` and 1 → `innerFrom` fast paths.
+- `partition` runs two independent `innerFrom` conversions (not shared), matching upstream.
+
+## Observable Group 5: Multicasting
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/ConnectableObservable.ts`
+- `readable-rxjs/src/observable/connectable.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `ConnectableObservable` assigns `_connection` before `source.subscribe` (a reentrant synchronous teardown then observes it), `_teardown()` nulls state before unsubscribing, and teardown runs before `subject.complete()`/`subject.error()` so handlers see a cold observable.
+- The readable operator tree imports this same class, preserving the `instanceof ConnectableObservable` assertions in the multicast/publish operator specs.
+- `connectable` creates the subject eagerly at call time, reconnects when `!connection || connection.closed`, and adds the resetOnDisconnect teardown after subscribe.
+- `ConnectableObservable` has no dedicated spec; it is covered through the operator multicast/publish/publishBehavior/publishLast/publishReplay/refCount/share/connect specs (253 tests).
+
+## Observable Group 6: DOM Integration
+
+Date: 2026-07-02
+
+Files reviewed:
+
+- `readable-rxjs/src/observable/dom/animationFrames.ts`
+- `readable-rxjs/src/observable/dom/fetch.ts`
+- `readable-rxjs/src/observable/dom/webSocket.ts`
+- `readable-rxjs/src/observable/dom/WebSocketSubject.ts`
+
+Review result:
+
+- Rewrite complete; behavior verified against upstream specs.
+
+Behavior notes:
+
+- `animationFrames` keeps the module-load-time shared default instance, the timestamp source selection (provider vs raw rAF timestamp), and resets `requestId` before requesting the next frame.
+- `fromFetch` flips `abortable` to false BEFORE next/complete/error so a synchronous unsubscribe never aborts a delivered body; the outer-signal wiring order and the per-subscription `{...init, signal}` copy are preserved.
+- `WebSocketSubject` preserves the onopen/onerror/onclose/onmessage handler assignment order, captures `_output` before the constructor try/catch, requires a close code in `error()` (else `TypeError`), resets on `onclose` only when the socket matches, sends the multiplex unsubscribe message before unsubscribing, and swaps the destination from the ReplaySubject buffer to a socket-writing subscriber with queue replay after `openObserver.next`.
+- `rxjs/ajax` (upstream `src/internal/ajax/`) is not part of `internal/observable/` and remains upstream code; its spec still runs.
+
+Typing directive applied throughout the observable rewrite: internal-only types were tightened (named type aliases for callback shapes, explicit generics, removal of internal `as any` where a precise type works, definite-assignment assertions replacing `@ts-ignore` in `WebSocketSubject`), while public declarations stay byte-compatible, limited to TypeScript 4.2.4.
+
+## Observable Rewrite Broad Verification
+
+Date: 2026-07-02 (Node 24.16.0, Windows)
+
+Commands:
+
+```sh
+npm run check:types
+npm run test:readable
+npm run test:operators
+npm run test:observables
+```
+
+Results:
+
+```text
+npm run check:types: passed
+npm run test:readable: 4 passing
+npm run test:operators: 2264 passing, 3 pending
+npm run test:observables: 522 passing, 2 failing
+```
+
+The two `test:observables` failures are pre-existing environment failures unrelated to the rewrite; both are identical against unmodified upstream:
+
+1. ajax "should fail if fails to parse response in older IE" asserts a pre-Node-20 V8 JSON error message string (`rxjs/ajax` is upstream code, out of rewrite scope).
+2. webSocket "should handle constructor errors if no WebSocketCtor" — Node ≥ 22 ships a global `WebSocket`, so the `ReferenceError` path cannot fire.

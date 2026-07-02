@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What This Repository Is
 
-A study edition of the RxJS 7.8.x operator implementation. All 117 operators in `readable-rxjs/src/operators/` are rewrites of the upstream RxJS source into more explicit, reviewable TypeScript — while preserving public behavior exactly. This is not an official RxJS distribution; it is a source-reading, refactoring, and documentation project derived from ReactiveX/RxJS (Apache-2.0, attribution must be preserved).
+A study edition of the RxJS 7.8.x source. All 117 operators in `readable-rxjs/src/operators/` and all 34 observable creation files in `readable-rxjs/src/observable/` (including `dom/`) are rewrites of the upstream RxJS source into more explicit, reviewable TypeScript — while preserving public behavior exactly. This is not an official RxJS distribution; it is a source-reading, refactoring, and documentation project derived from ReactiveX/RxJS (Apache-2.0, attribution must be preserved).
 
 ## Required Setup: the `upstream-rxjs` Sibling Checkout
 
@@ -23,10 +23,20 @@ Run from `readable-rxjs/` (each script internally `cd`s into `../upstream-rxjs` 
 
 ```sh
 npm run check:types                                    # tsc against readable-rxjs/tsconfig.json
-npm run test:operators                                 # full upstream operator spec suite (~2267 tests) against readable operators
-npm run test:operator -- spec/operators/map-spec.ts    # one upstream operator spec (path relative to upstream-rxjs)
+npm run test:operators                                 # full upstream operator spec suite (~2264 tests) against readable operators
+npm run test:observables                               # full upstream observable spec suite (~524 tests) against readable observables
+npm run test:operator -- spec/operators/map-spec.ts    # one upstream spec (path relative to upstream-rxjs; works for spec/observables too)
 npm run test:readable                                  # readable-local specs in readable-rxjs/spec
 ```
+
+On Windows these npm scripts need a POSIX shell (they use `./node_modules/.bin/...` and `env`). Without one, invoke the tools directly from `upstream-rxjs/`:
+
+```sh
+node node_modules/mocha/bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js <specs>
+node node_modules/typescript/lib/tsc.js -p ../readable-rxjs/tsconfig.json
+```
+
+Upstream pins TypeScript 4.2.4 — do not use post-4.2 syntax in readable code.
 
 Run from the repository root (VitePress docs):
 
@@ -38,18 +48,23 @@ npm run docs:build
 
 The root `dev`/`build`/`preview` scripts belong to a leftover Vite scaffold (`src/`, `index.html`) and are not part of the study project.
 
-## Architecture: How Readable Operators Substitute for Upstream
+## Architecture: How Readable Code Substitutes for Upstream
 
-The whole project hinges on two path-remapping layers that let the **unmodified upstream test suite** run against the readable operator tree:
+The whole project hinges on two path-remapping layers that let the **unmodified upstream test suite** run against the readable trees:
 
-1. **Compile time** — `readable-rxjs/tsconfig.json` extends the upstream tsconfig and remaps `rxjs/operators` and `rxjs/internal/operators/*` to `readable-rxjs/src/operators/`, while everything else (`rxjs`, `rxjs/testing`, `rxjs/internal/*`) still resolves to `upstream-rxjs/src/`.
-2. **Runtime** — `readable-rxjs/spec/support/mocha-readable-path-mappings.js` patches Node's `Module._resolveFilename` so `require('rxjs/operators')` and `rxjs/internal/operators/<name>` resolve to the readable tree during `test:operators`.
+1. **Compile time** — `readable-rxjs/tsconfig.json` extends the upstream tsconfig and remaps the readable entry points and deep paths to `readable-rxjs/src/`, while everything else (`rxjs/testing`, core `rxjs/internal/*`) still resolves to `upstream-rxjs/src/`.
+2. **Runtime** — `readable-rxjs/spec/support/mocha-readable-path-mappings.js` patches Node's `Module._resolveFilename` so `rxjs`, `rxjs/operators`, `rxjs/fetch`, `rxjs/webSocket`, `rxjs/internal/operators/*`, and `rxjs/internal/observable/*` resolve to the readable tree during `test:operators`/`test:observables`.
+
+**Mocha config ordering is load-bearing.** `readable-rxjs/spec/support/.mocharc.readable.js` exists because mocha loads CLI `--require` flags **before** config-file requires. Each path mapper wraps the previously installed `Module._resolveFilename`, so the last-installed mapper runs first. With the readable hook passed via CLI `--require`, upstream's mapper installed last and won — every rxjs import was silently routed back to upstream. The config file fixes the order: upstream's mapper is required first, the readable mapper last, so the readable hook runs first and delegates non-readable paths to upstream. The config also grep-excludes three upstream operator tests that race real timers and are flaky under Windows timer granularity (they fail against unmodified upstream too).
 
 Consequences of this design:
 
-- Readable operator files import non-refactored internals by **relative path** into the upstream checkout, e.g. `import { operate } from '../../../upstream-rxjs/src/internal/util/lift'`. Only the operators themselves are rewritten; `Observable`, `Subscriber`, schedulers, etc. come from upstream.
+- Readable files import non-refactored internals by **relative path** into the upstream checkout, e.g. `import { operate } from '../../../upstream-rxjs/src/internal/util/lift'`. Only the operators and observable creation files are rewritten; `Observable`, `Subscriber`, schedulers, etc. come from upstream.
 - Shared operator internals that were rewritten live alongside the operators: `OperatorSubscriber.ts`, `mergeInternals.ts`, `scanInternals.ts`, `joinAllInternals.ts`.
 - `readable-rxjs/src/operators/index.ts` mirrors the public `rxjs/operators` export surface and must stay in sync when operators change.
+- `readable-rxjs/src/index.ts` is the readable root index: it mirrors upstream `src/index.ts` **export-for-export**, routing operators to `./operators/*`, observable creation functions to `./observable/*`, and core/schedulers/utils/types to upstream. Entry indexes `src/fetch/index.ts` and `src/webSocket/index.ts` mirror `rxjs/fetch` and `rxjs/webSocket`.
+- The readable operator tree imports observable internals from its **readable siblings** (not upstream), so there is a single identity for `EMPTY`, `NEVER`, and `ConnectableObservable` across both trees — `empty-spec` asserts `empty() === EMPTY`, and operator specs assert `instanceof ConnectableObservable`.
+- `rxjs/ajax` (upstream `src/internal/ajax/`) is not part of `internal/observable/` and remains upstream code.
 
 ## Refactoring Contract (binding rules)
 
@@ -63,4 +78,4 @@ Consequences of this design:
 
 ## Documentation Structure
 
-`docs/` is a VitePress site (config in `docs/.vitepress/config.ts`). Operator documentation is grouped into 13 semantic review groups (`docs/operators/01-*.md` through `13-*.md`, defined in `docs/02-operator-review-groups.md`), plus a tagged catalog at `docs/operators/catalog.md`. `docs/04-semantic-review-log.md` records the semantic review and verification results — update it when review-relevant changes are made.
+`docs/` is a VitePress site (config in `docs/.vitepress/config.ts`). Operator documentation is grouped into 13 semantic review groups (`docs/operators/01-*.md` through `13-*.md`, defined in `docs/02-operator-review-groups.md`), and observable documentation into 6 groups (`docs/observables/01-*.md` through `06-*.md`, defined in `docs/05-observable-review-groups.md`). Each area has a tagged catalog (`docs/operators/catalog.md`, `docs/observables/catalog.md`). `docs/04-semantic-review-log.md` records the semantic review and verification results — update it when review-relevant changes are made.

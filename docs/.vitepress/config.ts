@@ -15,6 +15,7 @@ export default defineConfig({
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Operators', link: '/operators/' },
+      { text: 'Observables', link: '/observables/' },
       { text: 'Catalog', link: '/operators/catalog' },
       { text: 'Study Notes', link: '/03-operator-study-notes' },
       { text: 'Review Log', link: '/04-semantic-review-log' },
@@ -28,6 +29,7 @@ export default defineConfig({
           { text: 'Operator Review Groups', link: '/02-operator-review-groups' },
           { text: 'Operator Study Notes', link: '/03-operator-study-notes' },
           { text: 'Semantic Review Log', link: '/04-semantic-review-log' },
+          { text: 'Observable Review Groups', link: '/05-observable-review-groups' },
         ],
       },
       {
@@ -48,6 +50,19 @@ export default defineConfig({
           { text: '11. Combination And Join', link: '/operators/11-combination-join' },
           { text: '12. Multicasting And Sharing', link: '/operators/12-multicasting-sharing' },
           { text: '13. Scheduling Boundaries', link: '/operators/13-scheduling-boundaries' },
+        ],
+      },
+      {
+        text: 'Observables',
+        items: [
+          { text: 'Observable Index', link: '/observables/' },
+          { text: 'Generated Catalog', link: '/observables/catalog' },
+          { text: '1. Creation Basics', link: '/observables/01-creation-basics' },
+          { text: '2. Timing And Generation', link: '/observables/02-timing-generation' },
+          { text: '3. Events And Callbacks', link: '/observables/03-events-callbacks' },
+          { text: '4. Combination And Join', link: '/observables/04-combination-join' },
+          { text: '5. Multicasting', link: '/observables/05-multicasting' },
+          { text: '6. DOM Integration', link: '/observables/06-dom-integration' },
         ],
       },
     ],

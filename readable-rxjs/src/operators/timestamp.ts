@@ -1,5 +1,5 @@
 import { OperatorFunction, TimestampProvider, Timestamp } from '../../../upstream-rxjs/src/internal/types';
-import { dateTimestampProvider } from '../../../upstream-rxjs/src/internal/scheduler/dateTimestampProvider';
+import { dateTimestampProvider } from '../scheduler/dateTimestampProvider';
 import { map } from './map';
 
 /**

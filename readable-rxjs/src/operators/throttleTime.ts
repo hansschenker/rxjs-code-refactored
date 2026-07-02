@@ -1,4 +1,4 @@
-import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { asyncScheduler } from '../scheduler/async';
 import { throttle, ThrottleConfig } from './throttle';
 import { MonoTypeOperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 import { timer } from '../observable/timer';

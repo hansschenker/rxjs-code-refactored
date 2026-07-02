@@ -1,5 +1,5 @@
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
-import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { asyncScheduler } from '../scheduler/async';
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { Observer, OperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';

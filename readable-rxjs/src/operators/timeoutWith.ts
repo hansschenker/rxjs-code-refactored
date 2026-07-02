@@ -1,4 +1,4 @@
-import { async } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { async } from '../scheduler/async';
 import { isValidDate } from '../../../upstream-rxjs/src/internal/util/isDate';
 import { ObservableInput, OperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 import { timeout } from './timeout';

@@ -1,7 +1,7 @@
 import { Observable } from '../../../../upstream-rxjs/src/internal/Observable';
 import { TimestampProvider } from '../../../../upstream-rxjs/src/internal/types';
-import { performanceTimestampProvider } from '../../../../upstream-rxjs/src/internal/scheduler/performanceTimestampProvider';
-import { animationFrameProvider } from '../../../../upstream-rxjs/src/internal/scheduler/animationFrameProvider';
+import { performanceTimestampProvider } from '../../scheduler/performanceTimestampProvider';
+import { animationFrameProvider } from '../../scheduler/animationFrameProvider';
 
 /**
  * An observable of animation frames

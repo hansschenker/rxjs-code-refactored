@@ -1,4 +1,4 @@
-import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { asyncScheduler } from '../scheduler/async';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { MonoTypeOperatorFunction, SchedulerAction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';

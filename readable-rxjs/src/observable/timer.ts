@@ -1,6 +1,6 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { SchedulerAction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
-import { async as asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { async as asyncScheduler } from '../scheduler/async';
 import { isScheduler } from '../../../upstream-rxjs/src/internal/util/isScheduler';
 import { isValidDate } from '../../../upstream-rxjs/src/internal/util/isDate';
 

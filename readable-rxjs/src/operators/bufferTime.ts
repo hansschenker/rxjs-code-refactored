@@ -3,7 +3,7 @@ import { OperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/inte
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { arrRemove } from '../../../upstream-rxjs/src/internal/util/arrRemove';
-import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
+import { asyncScheduler } from '../scheduler/async';
 import { popScheduler } from '../../../upstream-rxjs/src/internal/util/args';
 import { executeSchedule } from '../../../upstream-rxjs/src/internal/util/executeSchedule';
 

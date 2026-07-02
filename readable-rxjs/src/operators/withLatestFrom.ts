@@ -1,7 +1,7 @@
 import { OperatorFunction, ObservableInputTuple } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { identity } from '../../../upstream-rxjs/src/internal/util/identity';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
 import { popResultSelector } from '../../../upstream-rxjs/src/internal/util/args';

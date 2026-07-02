@@ -2,7 +2,7 @@ import { ObservableInputTuple, OperatorFunction, SchedulerLike } from '../../../
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { concatAll } from './concatAll';
 import { popScheduler } from '../../../upstream-rxjs/src/internal/util/args';
-import { from } from '../../../upstream-rxjs/src/internal/observable/from';
+import { from } from '../observable/from';
 
 /** @deprecated Replaced with {@link concatWith}. Will be removed in v8. */
 export function concat<T, A extends readonly unknown[]>(...sources: [...ObservableInputTuple<A>]): OperatorFunction<T, T | A[number]>;

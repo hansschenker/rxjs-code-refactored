@@ -1,4 +1,4 @@
-import { concat } from '../../../upstream-rxjs/src/internal/observable/concat';
+import { concat } from '../observable/concat';
 import { OperatorFunction, SchedulerLike, ValueFromArray } from '../../../upstream-rxjs/src/internal/types';
 import { popScheduler } from '../../../upstream-rxjs/src/internal/util/args';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';

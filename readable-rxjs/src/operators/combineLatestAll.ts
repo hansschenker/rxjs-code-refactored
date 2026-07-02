@@ -1,4 +1,4 @@
-import { combineLatest } from '../../../upstream-rxjs/src/internal/observable/combineLatest';
+import { combineLatest } from '../observable/combineLatest';
 import { OperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
 import { joinAllInternals } from './joinAllInternals';
 

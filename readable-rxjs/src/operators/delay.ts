@@ -1,7 +1,7 @@
 import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
 import { MonoTypeOperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 import { delayWhen } from './delayWhen';
-import { timer } from '../../../upstream-rxjs/src/internal/observable/timer';
+import { timer } from '../observable/timer';
 
 /**
  * Delays the emission of items from the source Observable by a given timeout or

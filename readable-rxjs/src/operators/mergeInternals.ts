@@ -1,5 +1,5 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { Subscriber } from '../../../upstream-rxjs/src/internal/Subscriber';
 import { ObservableInput, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 import { executeSchedule } from '../../../upstream-rxjs/src/internal/util/executeSchedule';

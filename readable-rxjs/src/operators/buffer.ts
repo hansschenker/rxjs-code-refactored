@@ -2,7 +2,7 @@ import { OperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/in
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
 import { createOperatorSubscriber } from './OperatorSubscriber';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * Buffers the source Observable values until `closingNotifier` emits.

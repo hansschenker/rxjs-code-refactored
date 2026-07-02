@@ -1,6 +1,6 @@
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
-import { ConnectableObservable } from '../../../upstream-rxjs/src/internal/observable/ConnectableObservable';
+import { ConnectableObservable } from '../observable/ConnectableObservable';
 import { OperatorFunction, UnaryFunction, ObservedValueOf, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
 import { isFunction } from '../../../upstream-rxjs/src/internal/util/isFunction';
 import { connect } from './connect';

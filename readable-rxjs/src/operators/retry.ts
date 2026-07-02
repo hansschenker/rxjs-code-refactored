@@ -3,8 +3,8 @@ import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { identity } from '../../../upstream-rxjs/src/internal/util/identity';
-import { timer } from '../../../upstream-rxjs/src/internal/observable/timer';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { timer } from '../observable/timer';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * The {@link retry} operator configuration object. `retry` either accepts a `number`

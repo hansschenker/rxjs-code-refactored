@@ -1,5 +1,5 @@
 import { OperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
-import { zip } from '../../../upstream-rxjs/src/internal/observable/zip';
+import { zip } from '../observable/zip';
 import { joinAllInternals } from './joinAllInternals';
 
 /**

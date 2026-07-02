@@ -2,7 +2,7 @@ import { Subscriber } from '../../../upstream-rxjs/src/internal/Subscriber';
 import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
 
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 
 /**

@@ -1,4 +1,4 @@
-import { ConnectableObservable } from '../../../upstream-rxjs/src/internal/observable/ConnectableObservable';
+import { ConnectableObservable } from '../observable/ConnectableObservable';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { MonoTypeOperatorFunction } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';

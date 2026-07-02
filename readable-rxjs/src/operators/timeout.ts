@@ -4,7 +4,7 @@ import { isValidDate } from '../../../upstream-rxjs/src/internal/util/isDate';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { createErrorClass } from '../../../upstream-rxjs/src/internal/util/createErrorClass';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { executeSchedule } from '../../../upstream-rxjs/src/internal/util/executeSchedule';

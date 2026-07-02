@@ -1,5 +1,5 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 

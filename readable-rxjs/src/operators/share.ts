@@ -1,4 +1,4 @@
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { SafeSubscriber } from '../../../upstream-rxjs/src/internal/Subscriber';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';

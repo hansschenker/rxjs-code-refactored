@@ -3,7 +3,7 @@ import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * An object interface used by {@link throttle} or {@link throttleTime} that ensure

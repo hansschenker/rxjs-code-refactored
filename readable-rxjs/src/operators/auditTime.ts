@@ -1,6 +1,6 @@
 import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
 import { audit } from './audit';
-import { timer } from '../../../upstream-rxjs/src/internal/observable/timer';
+import { timer } from '../observable/timer';
 import { MonoTypeOperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
 
 /**

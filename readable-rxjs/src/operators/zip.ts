@@ -1,4 +1,4 @@
-import { zip as zipStatic } from '../../../upstream-rxjs/src/internal/observable/zip';
+import { zip as zipStatic } from '../observable/zip';
 import { ObservableInput, ObservableInputTuple, OperatorFunction, Cons } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 

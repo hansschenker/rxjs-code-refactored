@@ -1,9 +1,9 @@
 import { OperatorFunction, ObservableInput, ObservedValueOf, SubjectLike } from '../../../upstream-rxjs/src/internal/types';
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
-import { fromSubscribable } from '../../../upstream-rxjs/src/internal/observable/fromSubscribable';
+import { fromSubscribable } from '../observable/fromSubscribable';
 
 /**
  * An object used to configure {@link connect} operator.

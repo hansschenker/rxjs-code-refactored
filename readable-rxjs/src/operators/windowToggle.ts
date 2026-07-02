@@ -3,7 +3,7 @@ import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
 import { ObservableInput, OperatorFunction } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
 import { arrRemove } from '../../../upstream-rxjs/src/internal/util/arrRemove';

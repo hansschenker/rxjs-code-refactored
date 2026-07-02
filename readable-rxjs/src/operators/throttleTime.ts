@@ -1,7 +1,7 @@
 import { asyncScheduler } from '../../../upstream-rxjs/src/internal/scheduler/async';
 import { throttle, ThrottleConfig } from './throttle';
 import { MonoTypeOperatorFunction, SchedulerLike } from '../../../upstream-rxjs/src/internal/types';
-import { timer } from '../../../upstream-rxjs/src/internal/observable/timer';
+import { timer } from '../observable/timer';
 
 /**
  * Emits a value from the source Observable, then ignores subsequent source

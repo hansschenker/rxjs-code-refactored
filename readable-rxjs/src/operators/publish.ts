@@ -1,7 +1,7 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { multicast } from './multicast';
-import { ConnectableObservable } from '../../../upstream-rxjs/src/internal/observable/ConnectableObservable';
+import { ConnectableObservable } from '../observable/ConnectableObservable';
 import { MonoTypeOperatorFunction, OperatorFunction, UnaryFunction, ObservableInput, ObservedValueOf } from '../../../upstream-rxjs/src/internal/types';
 import { connect } from './connect';
 

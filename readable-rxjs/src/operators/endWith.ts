@@ -1,7 +1,7 @@
 /** prettier */
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
-import { concat } from '../../../upstream-rxjs/src/internal/observable/concat';
-import { of } from '../../../upstream-rxjs/src/internal/observable/of';
+import { concat } from '../observable/concat';
+import { of } from '../observable/of';
 import { MonoTypeOperatorFunction, SchedulerLike, OperatorFunction, ValueFromArray } from '../../../upstream-rxjs/src/internal/types';
 
 /** @deprecated The `scheduler` parameter will be removed in v8. Use `scheduled` and `concatAll`. Details: https://rxjs.dev/deprecations/scheduler-argument */

@@ -1,5 +1,5 @@
 import { OperatorFunction, ObservableInputTuple } from '../../../upstream-rxjs/src/internal/types';
-import { raceInit } from '../../../upstream-rxjs/src/internal/observable/race';
+import { raceInit } from '../observable/race';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { identity } from '../../../upstream-rxjs/src/internal/util/identity';
 

@@ -1,4 +1,4 @@
-import { combineLatestInit } from '../../../upstream-rxjs/src/internal/observable/combineLatest';
+import { combineLatestInit } from '../observable/combineLatest';
 import { ObservableInput, ObservableInputTuple, OperatorFunction } from '../../../upstream-rxjs/src/internal/types';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { argsOrArgArray } from '../../../upstream-rxjs/src/internal/util/argsOrArgArray';

@@ -1,6 +1,6 @@
 import { ObservableInputTuple, OperatorFunction } from '../../../upstream-rxjs/src/internal/types';
 import { argsOrArgArray } from '../../../upstream-rxjs/src/internal/util/argsOrArgArray';
-import { onErrorResumeNext as createOnErrorResumeNext } from '../../../upstream-rxjs/src/internal/observable/onErrorResumeNext';
+import { onErrorResumeNext as createOnErrorResumeNext } from '../observable/onErrorResumeNext';
 
 export function onErrorResumeNextWith<T, A extends readonly unknown[]>(
   sources: [...ObservableInputTuple<A>]

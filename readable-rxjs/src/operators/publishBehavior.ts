@@ -1,6 +1,6 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { BehaviorSubject } from '../../../upstream-rxjs/src/internal/BehaviorSubject';
-import { ConnectableObservable } from '../../../upstream-rxjs/src/internal/observable/ConnectableObservable';
+import { ConnectableObservable } from '../observable/ConnectableObservable';
 import { UnaryFunction } from '../../../upstream-rxjs/src/internal/types';
 
 /**

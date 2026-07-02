@@ -4,7 +4,7 @@ import { Subject } from '../../../upstream-rxjs/src/internal/Subject';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * Branch out the source Observable values as a nested Observable whenever

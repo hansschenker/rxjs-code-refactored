@@ -2,7 +2,7 @@ import { ObservableInput, ObservableInputTuple, OperatorFunction, SchedulerLike 
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { mergeAll } from './mergeAll';
 import { popNumber, popScheduler } from '../../../upstream-rxjs/src/internal/util/args';
-import { from } from '../../../upstream-rxjs/src/internal/observable/from';
+import { from } from '../observable/from';
 
 /** @deprecated Replaced with {@link mergeWith}. Will be removed in v8. */
 export function merge<T, A extends readonly unknown[]>(...sources: [...ObservableInputTuple<A>]): OperatorFunction<T, T | A[number]>;

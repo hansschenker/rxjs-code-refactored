@@ -2,7 +2,7 @@ import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { Subscriber } from '../../../upstream-rxjs/src/internal/Subscriber';
 import { ObservableInput, OperatorFunction, ObservedValueOf } from '../../../upstream-rxjs/src/internal/types';
 import { map } from './map';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 

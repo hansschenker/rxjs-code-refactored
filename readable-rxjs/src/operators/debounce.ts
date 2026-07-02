@@ -3,7 +3,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxj
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
 import { createOperatorSubscriber } from './OperatorSubscriber';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * Emits a notification from the source Observable only after a particular time span

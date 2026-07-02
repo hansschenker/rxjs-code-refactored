@@ -1,11 +1,11 @@
 import { Observable } from '../../../upstream-rxjs/src/internal/Observable';
 import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
-import { concat } from '../../../upstream-rxjs/src/internal/observable/concat';
+import { concat } from '../observable/concat';
 import { take } from './take';
 import { ignoreElements } from './ignoreElements';
 import { mapTo } from './mapTo';
 import { mergeMap } from './mergeMap';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /** @deprecated The `subscriptionDelay` parameter will be removed in v8. */
 export function delayWhen<T>(

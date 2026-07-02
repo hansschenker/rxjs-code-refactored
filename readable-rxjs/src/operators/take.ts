@@ -1,5 +1,5 @@
 import { MonoTypeOperatorFunction } from '../../../upstream-rxjs/src/internal/types';
-import { EMPTY } from '../../../upstream-rxjs/src/internal/observable/empty';
+import { EMPTY } from '../observable/empty';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 

@@ -1,10 +1,10 @@
 import { Subscription } from '../../../upstream-rxjs/src/internal/Subscription';
-import { EMPTY } from '../../../upstream-rxjs/src/internal/observable/empty';
+import { EMPTY } from '../observable/empty';
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxjs/src/internal/types';
 import { createOperatorSubscriber } from './OperatorSubscriber';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
-import { timer } from '../../../upstream-rxjs/src/internal/observable/timer';
+import { innerFrom } from '../observable/innerFrom';
+import { timer } from '../observable/timer';
 
 export interface RepeatConfig {
   /**

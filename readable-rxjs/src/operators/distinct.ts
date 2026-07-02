@@ -2,7 +2,7 @@ import { MonoTypeOperatorFunction, ObservableInput } from '../../../upstream-rxj
 import { operate } from '../../../upstream-rxjs/src/internal/util/lift';
 import { createOperatorSubscriber } from './OperatorSubscriber';
 import { noop } from '../../../upstream-rxjs/src/internal/util/noop';
-import { innerFrom } from '../../../upstream-rxjs/src/internal/observable/innerFrom';
+import { innerFrom } from '../observable/innerFrom';
 
 /**
  * Returns an Observable that emits all items emitted by the source Observable that are distinct by comparison from previous items.

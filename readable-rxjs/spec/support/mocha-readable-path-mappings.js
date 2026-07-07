@@ -16,6 +16,14 @@ const internalDirs = [
   { pattern: /^rxjs\/internal\/operators\/(.+)$/, dir: join(readableSrc, 'operators') },
   { pattern: /^rxjs\/internal\/observable\/(.+)$/, dir: join(readableSrc, 'observable') },
   { pattern: /^rxjs\/internal\/scheduler\/(.+)$/, dir: join(readableSrc, 'scheduler') },
+  { pattern: /^rxjs\/internal\/scheduled\/(.+)$/, dir: join(readableSrc, 'scheduled') },
+  { pattern: /^rxjs\/internal\/util\/(lift|isObservable)$/, dir: join(readableSrc, 'util') },
+  // Core classes and root-level modules live at the readable src root.
+  {
+    pattern:
+      /^rxjs\/internal\/(Observable|Subscriber|Subscription|Subject|BehaviorSubject|ReplaySubject|AsyncSubject|Scheduler|Notification|NotificationFactories|firstValueFrom|lastValueFrom|config)$/,
+    dir: readableSrc,
+  },
 ];
 
 const mod = require('module');

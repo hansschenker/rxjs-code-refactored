@@ -5,7 +5,7 @@
 
 
 /* Observable */
-export { Observable } from '../../upstream-rxjs/src/internal/Observable';
+export { Observable } from './Observable';
 export { ConnectableObservable } from './observable/ConnectableObservable';
 export { GroupedObservable } from './operators/groupBy';
 export { Operator } from '../../upstream-rxjs/src/internal/Operator';
@@ -13,10 +13,10 @@ export { observable } from '../../upstream-rxjs/src/internal/symbol/observable';
 export { animationFrames } from './observable/dom/animationFrames';
 
 /* Subjects */
-export { Subject } from '../../upstream-rxjs/src/internal/Subject';
-export { BehaviorSubject } from '../../upstream-rxjs/src/internal/BehaviorSubject';
-export { ReplaySubject } from '../../upstream-rxjs/src/internal/ReplaySubject';
-export { AsyncSubject } from '../../upstream-rxjs/src/internal/AsyncSubject';
+export { Subject } from './Subject';
+export { BehaviorSubject } from './BehaviorSubject';
+export { ReplaySubject } from './ReplaySubject';
+export { AsyncSubject } from './AsyncSubject';
 
 /* Schedulers */
 export { asap, asapScheduler } from './scheduler/asap';
@@ -24,24 +24,24 @@ export { async, asyncScheduler } from './scheduler/async';
 export { queue, queueScheduler } from './scheduler/queue';
 export { animationFrame, animationFrameScheduler } from './scheduler/animationFrame';
 export { VirtualTimeScheduler, VirtualAction } from './scheduler/VirtualTimeScheduler';
-export { Scheduler } from '../../upstream-rxjs/src/internal/Scheduler';
+export { Scheduler } from './Scheduler';
 
 /* Subscription */
-export { Subscription } from '../../upstream-rxjs/src/internal/Subscription';
-export { Subscriber } from '../../upstream-rxjs/src/internal/Subscriber';
+export { Subscription } from './Subscription';
+export { Subscriber } from './Subscriber';
 
 /* Notification */
-export { Notification, NotificationKind } from '../../upstream-rxjs/src/internal/Notification';
+export { Notification, NotificationKind } from './Notification';
 
 /* Utils */
 export { pipe } from '../../upstream-rxjs/src/internal/util/pipe';
 export { noop } from '../../upstream-rxjs/src/internal/util/noop';
 export { identity } from '../../upstream-rxjs/src/internal/util/identity';
-export { isObservable } from '../../upstream-rxjs/src/internal/util/isObservable';
+export { isObservable } from './util/isObservable';
 
 /* Promise Conversion */
-export { lastValueFrom } from '../../upstream-rxjs/src/internal/lastValueFrom';
-export { firstValueFrom } from '../../upstream-rxjs/src/internal/firstValueFrom';
+export { lastValueFrom } from './lastValueFrom';
+export { firstValueFrom } from './firstValueFrom';
 
 /* Error types */
 export { ArgumentOutOfRangeError } from '../../upstream-rxjs/src/internal/util/ArgumentOutOfRangeError';
@@ -79,7 +79,7 @@ export { throwError } from './observable/throwError';
 export { timer } from './observable/timer';
 export { using } from './observable/using';
 export { zip } from './observable/zip';
-export { scheduled } from '../../upstream-rxjs/src/internal/scheduled/scheduled';
+export { scheduled } from './scheduled/scheduled';
 
 /* Constants */
 export { EMPTY } from './observable/empty';
@@ -89,7 +89,7 @@ export { NEVER } from './observable/never';
 export * from '../../upstream-rxjs/src/internal/types';
 
 /* Config */
-export { config, GlobalConfig } from '../../upstream-rxjs/src/internal/config';
+export { config, GlobalConfig } from './config';
 
 /* Operators */
 export { audit } from './operators/audit';

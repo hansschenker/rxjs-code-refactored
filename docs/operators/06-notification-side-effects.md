@@ -6,11 +6,15 @@ Review log: [Group 6](/04-semantic-review-log#group-6-notification-and-side-effe
 
 ## `materialize.ts`
 
+See also: [`dematerialize`](/operators/06-notification-side-effects#dematerialize-ts).
+
 ::: details Source
 <<< ../../readable-rxjs/src/operators/materialize.ts
 :::
 
 ## `dematerialize.ts`
+
+See also: [`materialize`](/operators/06-notification-side-effects#materialize-ts).
 
 ::: details Source
 <<< ../../readable-rxjs/src/operators/dematerialize.ts
@@ -29,6 +33,8 @@ Review log: [Group 6](/04-semantic-review-log#group-6-notification-and-side-effe
 :::
 
 ## `tap.ts`
+
+See also: [`finalize`](/operators/06-notification-side-effects#finalize-ts).
 
 ::: details Source
 <<< ../../readable-rxjs/src/operators/tap.ts

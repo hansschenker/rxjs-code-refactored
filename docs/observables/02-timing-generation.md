@@ -12,6 +12,8 @@ npm run test:operator -- spec/observables/interval-spec.ts spec/observables/time
 
 ## `interval.ts`
 
+See also: [`timer`](/observables/02-timing-generation#timer-ts), [`delay`](/operators/08-time-rate-limiting#delay-ts).
+
 A thin wrapper over `timer(period, period, scheduler)` with negative-period clamping to zero.
 
 ::: details Source
@@ -19,6 +21,8 @@ A thin wrapper over `timer(period, period, scheduler)` with negative-period clam
 :::
 
 ## `timer.ts`
+
+See also: [`interval`](/observables/02-timing-generation#interval-ts), [`delay`](/operators/08-time-rate-limiting#delay-ts).
 
 The readable rewrite names the due-time and interval bookkeeping explicitly.
 
@@ -33,6 +37,8 @@ Behavior-sensitive spots preserved:
 :::
 
 ## `generate.ts`
+
+See also: [`from`](/observables/01-creation-basics#from-ts).
 
 The rewrite separates the config-object form from the positional form and names the shared iteration engine.
 

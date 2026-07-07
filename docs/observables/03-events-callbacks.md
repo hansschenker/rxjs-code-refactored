@@ -12,6 +12,8 @@ npm run test:operator -- spec/observables/fromEvent-spec.ts spec/observables/fro
 
 ## `fromEvent.ts`
 
+See also: [`bindCallback`](/observables/03-events-callbacks#bindcallback-ts), [`bindNodeCallback`](/observables/03-events-callbacks#bindnodecallback-ts), [`fromEventPattern`](/observables/03-events-callbacks#fromeventpattern-ts).
+
 The readable rewrite names the three target shapes and their duck-typing checks.
 
 Behavior-sensitive spots preserved:
@@ -27,6 +29,8 @@ Behavior-sensitive spots preserved:
 
 ## `fromEventPattern.ts`
 
+See also: [`fromEvent`](/observables/03-events-callbacks#fromevent-ts), [`bindCallback`](/observables/03-events-callbacks#bindcallback-ts), [`bindNodeCallback`](/observables/03-events-callbacks#bindnodecallback-ts).
+
 `addHandler` runs per subscription; its return value is passed to `removeHandler` at teardown. The result-selector path maps through the same multi-argument rule as `fromEvent`.
 
 ::: details Source
@@ -35,6 +39,8 @@ Behavior-sensitive spots preserved:
 
 ## `bindCallback.ts`
 
+See also: [`bindNodeCallback`](/observables/03-events-callbacks#bindnodecallback-ts), [`from`](/observables/01-creation-basics#from-ts).
+
 A thin deprecated wrapper delegating to `bindCallbackInternals` with `isNodeStyle = false`.
 
 ::: details Source
@@ -42,6 +48,8 @@ A thin deprecated wrapper delegating to `bindCallbackInternals` with `isNodeStyl
 :::
 
 ## `bindNodeCallback.ts`
+
+See also: [`bindCallback`](/observables/03-events-callbacks#bindcallback-ts), [`from`](/observables/01-creation-basics#from-ts).
 
 A thin deprecated wrapper delegating to `bindCallbackInternals` with `isNodeStyle = true`, adding the error-first callback convention.
 

@@ -104,6 +104,12 @@ https://github.com/ReactiveX/rxjs
 
 RxJS is copyright the RxJS contributors and licensed under Apache License 2.0.
 
+### Documentation Sources
+
+- The per-operator reference JSDoc in the readable sources (descriptions, marble references, examples, `@see` tags) is restored verbatim from the upstream RxJS 7.8.x source (Apache-2.0, RxJS contributors).
+- The "See also" cross-links in the documentation group pages are derived primarily from upstream JSDoc `@see` tags, supplemented in a small number of cases by the `relatedOperators` data of [niklas-wortmann/rxjs-docs](https://github.com/niklas-wortmann/rxjs-docs) (Apache-2.0, © its contributors), a community RxJS documentation project by former RxJS core team member Jan-Niklas Wortmann. Its per-operator page schema also informed the structure of the group documentation pages.
+- The study guides in `docs/guide/` reference the official RxJS guides that ship with the upstream checkout (`upstream-rxjs/docs_app/content/guide/`).
+
 ## Project Status
 
 - Operator implementation rewrite: complete, `117 / 117`.

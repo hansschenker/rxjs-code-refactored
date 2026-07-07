@@ -14,6 +14,7 @@ export default defineConfig({
     },
     nav: [
       { text: 'Home', link: '/' },
+      { text: 'Guide', link: '/guide/' },
       { text: 'Operators', link: '/operators/' },
       { text: 'Observables', link: '/observables/' },
       { text: 'Schedulers', link: '/schedulers/' },
@@ -32,6 +33,14 @@ export default defineConfig({
           { text: 'Semantic Review Log', link: '/04-semantic-review-log' },
           { text: 'Observable Review Groups', link: '/05-observable-review-groups' },
           { text: 'Scheduler Review Groups', link: '/06-scheduler-review-groups' },
+        ],
+      },
+      {
+        text: 'Study Guides',
+        items: [
+          { text: 'Guide Index', link: '/guide/' },
+          { text: 'Anatomy Of An Operator', link: '/guide/operator-anatomy' },
+          { text: 'Flattening Strategies', link: '/guide/flattening-strategies' },
         ],
       },
       {

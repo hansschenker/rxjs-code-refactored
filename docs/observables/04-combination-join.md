@@ -12,6 +12,8 @@ npm run test:operator -- spec/observables/combineLatest-spec.ts spec/observables
 
 ## `combineLatest.ts`
 
+See also: [`combineLatestAll`](/operators/11-combination-join#combinelatestall-ts), [`merge`](/observables/04-combination-join#merge-ts), [`withLatestFrom`](/operators/11-combination-join#withlatestfrom-ts).
+
 The readable rewrite names the readiness bookkeeping (`remainingFirstValues`, per-source flags) that upstream tracks with counters.
 
 Behavior-sensitive spots preserved:
@@ -28,6 +30,8 @@ Behavior-sensitive spots preserved:
 
 ## `concat.ts`
 
+See also: [`concatAll`](/operators/10-higher-order-flattening#concatall-ts), [`concatMap`](/operators/10-higher-order-flattening#concatmap-ts), [`concatMapTo`](/operators/10-higher-order-flattening#concatmapto-ts), [`startWith`](/operators/05-take-skip#startwith-ts), [`endWith`](/operators/05-take-skip#endwith-ts).
+
 `popScheduler` mutates the argument list before `concatAll()(from(sources, scheduler))` — the argument-popping order is load-bearing.
 
 ::: details Source
@@ -35,6 +39,8 @@ Behavior-sensitive spots preserved:
 :::
 
 ## `merge.ts`
+
+See also: [`mergeAll`](/operators/10-higher-order-flattening#mergeall-ts), [`mergeMap`](/operators/10-higher-order-flattening#mergemap-ts), [`mergeMapTo`](/operators/10-higher-order-flattening#mergemapto-ts), [`mergeScan`](/operators/10-higher-order-flattening#mergescan-ts).
 
 Behavior-sensitive spots preserved:
 
@@ -67,6 +73,8 @@ Behavior-sensitive spot preserved: the per-value sequence is push to the source'
 
 ## `forkJoin.ts`
 
+See also: [`combineLatest`](/observables/04-combination-join#combinelatest-ts), [`zip`](/observables/04-combination-join#zip-ts).
+
 Behavior-sensitive spot preserved: the "completed without ever emitting" detection lives in the subscriber **finalizer**, not the `complete` handler — this is what makes the empty-source error/complete decision correct under teardown ordering.
 
 ::: details Source
@@ -75,6 +83,8 @@ Behavior-sensitive spot preserved: the "completed without ever emitting" detecti
 
 ## `onErrorResumeNext.ts`
 
+See also: [`concat`](/observables/04-combination-join#concat-ts), [`catchError`](/operators/07-error-retry-timeout#catcherror-ts).
+
 Behavior-sensitive spot preserved: the subscription to the next source is registered as a teardown of the current one **after** `subscribe` is called — that registration ordering *is* the sequencing mechanism when a source completes synchronously.
 
 ::: details Source
@@ -82,6 +92,8 @@ Behavior-sensitive spot preserved: the subscription to the next source is regist
 :::
 
 ## `partition.ts`
+
+See also: [`filter`](/operators/01-projection-selection#filter-ts).
 
 Behavior-sensitive spot preserved: the two branches run **independent** `innerFrom` conversions of the source (not a shared one), matching upstream — a cold source is subscribed twice.
 

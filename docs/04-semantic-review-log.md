@@ -861,3 +861,29 @@ npm run test:operators: 2264 passing, 3 pending
 npm run test:observables: 522 passing, 2 failing (the two known pre-existing environment failures)
 npm run test:readable: 4 passing
 ```
+
+## Documentation Restoration Pass: Upstream JSDoc And Cross-Links
+
+Date: 2026-07-07 (Node 24.16.0, Windows)
+
+Changes (comment/documentation only — no code, signature, or import changes):
+
+- Restored the upstream reference JSDoc (description, marble reference, `## Example`, `@see`/`@param`/`@return`) verbatim into the 17 readable operator files that had dropped it during the rewrite: `count`, `defaultIfEmpty`, `dematerialize`, `every`, `filter`, `ignoreElements`, `isEmpty`, `map`, `materialize`, `max`, `min`, `pairwise`, `skip`, `skipWhile`, `take`, `takeWhile`, `throwIfEmpty`. All other operator, observable (including `dom/`), and scheduler files already carried their upstream JSDoc. Existing deprecated-overload notices were untouched; readable-specific inline behavior comments in function bodies were untouched.
+- Generated "See also" cross-links in the operator and observable group docs (108 entries across 17 doc pages), sourced from upstream JSDoc `@see {@link ...}` tags, with 2 entries supplemented from the `relatedOperators` data of niklas-wortmann/rxjs-docs (Apache-2.0; attribution added to the README).
+- Added `docs/guide/` study guides (operator anatomy, flattening strategies) and upgraded operator group docs 1 and 10 to the scheduler-doc standard (opening prose, per-file notes, behavior-sensitive spots). Groups 2–9 and 11–13 remain at the embed-only standard — upgrading them to this template is open follow-up work.
+
+Verification:
+
+```sh
+node node_modules/typescript/lib/tsc.js -p ../readable-rxjs/tsconfig.json   # from upstream-rxjs/
+node node_modules/mocha/bin/mocha --config ../readable-rxjs/spec/support/.mocharc.readable.js "spec/operators/*-spec.ts"
+npm run docs:build   # from the repository root
+```
+
+Results:
+
+```text
+check:types: passed (exit 0)
+test:operators: 2264 passing, 3 pending (identical to the pre-change baseline)
+docs:build: completed with no dead links (validates all generated cross-links)
+```

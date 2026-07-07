@@ -25,6 +25,8 @@ Behavior-sensitive spots preserved:
 
 ## `from.ts`
 
+See also: [`fromEvent`](/observables/03-events-callbacks#fromevent-ts), [`fromEventPattern`](/observables/03-events-callbacks#fromeventpattern-ts).
+
 A thin public wrapper: with a scheduler it delegates to `scheduled`, without one to `innerFrom`. The scheduler overload remains deprecated.
 
 ::: details Source
@@ -32,6 +34,8 @@ A thin public wrapper: with a scheduler it delegates to `scheduled`, without one
 :::
 
 ## `of.ts`
+
+See also: [`from`](/observables/01-creation-basics#from-ts), [`range`](/observables/01-creation-basics#range-ts).
 
 `of` remains argument-popping (`popScheduler`) followed by `from`. The deprecated scheduler overloads are preserved.
 
@@ -41,6 +45,8 @@ A thin public wrapper: with a scheduler it delegates to `scheduled`, without one
 
 ## `empty.ts`
 
+See also: [`of`](/observables/01-creation-basics#of-ts), [`throwError`](/observables/01-creation-basics#throwerror-ts).
+
 Behavior-sensitive spot preserved: `empty()` without a scheduler returns the module-level `EMPTY` singleton — identity is guaranteed, and the upstream spec asserts `empty() === EMPTY`. The readable operator tree imports this same `EMPTY`, so there is a single identity across operators and observables.
 
 ::: details Source
@@ -48,6 +54,8 @@ Behavior-sensitive spot preserved: `empty()` without a scheduler returns the mod
 :::
 
 ## `never.ts`
+
+See also: [`of`](/observables/01-creation-basics#of-ts), [`throwError`](/observables/01-creation-basics#throwerror-ts).
 
 Same singleton rule as `empty`: `never()` returns the module-level `NEVER` instance.
 
@@ -66,6 +74,8 @@ Behavior-sensitive spot preserved: the scheduled path passes the subscriber itse
 :::
 
 ## `range.ts`
+
+See also: [`timer`](/observables/02-timing-generation#timer-ts), [`interval`](/observables/02-timing-generation#interval-ts).
 
 Behavior-sensitive spots preserved:
 
@@ -87,6 +97,8 @@ The factory is invoked per subscription and its result converted with `innerFrom
 
 ## `iif.ts`
 
+See also: [`defer`](/observables/01-creation-basics#defer-ts).
+
 A `defer` over the condition; both branch observables are only touched after the condition is evaluated at subscribe time. Tested by `if-spec.ts`.
 
 ::: details Source
@@ -94,6 +106,8 @@ A `defer` over the condition; both branch observables are only touched after the
 :::
 
 ## `using.ts`
+
+See also: [`defer`](/observables/01-creation-basics#defer-ts).
 
 Behavior-sensitive spots preserved:
 

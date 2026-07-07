@@ -18,6 +18,8 @@ Review log: [Group 12](/04-semantic-review-log#group-12-multicasting-and-sharing
 
 ## `publish.ts`
 
+See also: [`publishLast`](/operators/12-multicasting-sharing#publishlast-ts), [`publishReplay`](/operators/12-multicasting-sharing#publishreplay-ts), [`publishBehavior`](/operators/12-multicasting-sharing#publishbehavior-ts).
+
 ::: details Source
 <<< ../../readable-rxjs/src/operators/publish.ts
 :::
@@ -29,6 +31,8 @@ Review log: [Group 12](/04-semantic-review-log#group-12-multicasting-and-sharing
 :::
 
 ## `publishLast.ts`
+
+See also: [`ConnectableObservable`](/observables/05-multicasting#connectableobservable-ts), [`publish`](/operators/12-multicasting-sharing#publish-ts), [`publishReplay`](/operators/12-multicasting-sharing#publishreplay-ts), [`publishBehavior`](/operators/12-multicasting-sharing#publishbehavior-ts).
 
 ::: details Source
 <<< ../../readable-rxjs/src/operators/publishLast.ts
@@ -42,17 +46,23 @@ Review log: [Group 12](/04-semantic-review-log#group-12-multicasting-and-sharing
 
 ## `refCount.ts`
 
+See also: [`ConnectableObservable`](/observables/05-multicasting#connectableobservable-ts), [`share`](/operators/12-multicasting-sharing#share-ts), [`publish`](/operators/12-multicasting-sharing#publish-ts).
+
 ::: details Source
 <<< ../../readable-rxjs/src/operators/refCount.ts
 :::
 
 ## `share.ts`
 
+See also: [`shareReplay`](/operators/12-multicasting-sharing#sharereplay-ts).
+
 ::: details Source
 <<< ../../readable-rxjs/src/operators/share.ts
 :::
 
 ## `shareReplay.ts`
+
+See also: [`publish`](/operators/12-multicasting-sharing#publish-ts), [`share`](/operators/12-multicasting-sharing#share-ts), [`publishReplay`](/operators/12-multicasting-sharing#publishreplay-ts).
 
 ::: details Source
 <<< ../../readable-rxjs/src/operators/shareReplay.ts
